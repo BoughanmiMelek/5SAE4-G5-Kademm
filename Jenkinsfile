@@ -56,8 +56,7 @@ pipeline {
         stage('Building jar') {
             steps {
                 script {
-                    def mvnHome = tool name: 'maven-3', type: 'maven'
-                    sh "${mvnHome}/bin/mvn clean package"
+                    sh "mvn clean package"
                 }
             }
         }
