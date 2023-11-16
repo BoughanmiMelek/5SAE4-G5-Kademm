@@ -16,7 +16,7 @@ services:
 
 
   app_achat_back:
-    image : melekboug/spring-app:1.0
+    image : melekboug/kaddem:1.0
     depends_on:
       - mysqldatabase
     restart: on-failure
