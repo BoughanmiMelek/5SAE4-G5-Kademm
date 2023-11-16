@@ -98,7 +98,7 @@ pipeline {
                     mail bcc: '', body: '''Hi,
                         Welcome to jenkins email alerts.
                         Thanks,
-                        Anas''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'anasbo7@hotmail.com'
+                        Malek''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'melekboughanmi2023@gmail.com'
                 }
             }
         }
