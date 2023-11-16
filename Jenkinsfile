@@ -91,7 +91,7 @@ pipeline {
         }
 
 
-        stage('Email Notification') {
+      /*  stage('Email Notification') {
             steps {
                 script {
                     mail bcc: '', body: '''Hi,
@@ -100,7 +100,7 @@ pipeline {
                         Malek''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'melekboughanmi2023@gmail.com'
                 }
             }
-        }
+        }  */
 
 
         stage('Build And Deploy Docker Image') {
