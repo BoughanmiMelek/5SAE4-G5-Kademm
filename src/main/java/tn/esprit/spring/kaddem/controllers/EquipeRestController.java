@@ -49,7 +49,7 @@ public class EquipeRestController {
 	@Scheduled(cron="0 0 13 * * *")
 	@PutMapping("/faireEvoluerEquipes")
 	public void faireEvoluerEquipes() {
-		 equipeService.evoluerEquipes() ;
+		equipeService.evoluerEquipes() ;
 	}
 }
 

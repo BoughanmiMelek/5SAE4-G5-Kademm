@@ -22,7 +22,7 @@ public class EquipeServiceImpl implements IEquipeService{
 
 
 	public List<Equipe> retrieveAllEquipes(){
-	return  (List<Equipe>) equipeRepository.findAll();
+		return  (List<Equipe>) equipeRepository.findAll();
 	}
 	public Equipe addEquipe(Equipe e){
 		return (equipeRepository.save(e));
@@ -38,7 +38,7 @@ public class EquipeServiceImpl implements IEquipeService{
 	}
 
 	public Equipe updateEquipe(Equipe e){
-	return (	equipeRepository.save(e));
+		return (	equipeRepository.save(e));
 	}
 
 	public void evoluerEquipes(){
@@ -62,17 +62,17 @@ public class EquipeServiceImpl implements IEquipeService{
 						if (nbEtudiantsAvecContratsActifs >= 3) break;
 					}
 				}
-					if (nbEtudiantsAvecContratsActifs >= 3){
-						if (equipe.getNiveau().equals(Niveau.JUNIOR)){
-							equipe.setNiveau(Niveau.SENIOR);
-							equipeRepository.save(equipe);
-							break;
-						}
-						if (equipe.getNiveau().equals(Niveau.SENIOR)){
-							equipe.setNiveau(Niveau.EXPERT);
-							equipeRepository.save(equipe);
-							break;
-						}
+				if (nbEtudiantsAvecContratsActifs >= 3){
+					if (equipe.getNiveau().equals(Niveau.JUNIOR)){
+						equipe.setNiveau(Niveau.SENIOR);
+						equipeRepository.save(equipe);
+						break;
+					}
+					if (equipe.getNiveau().equals(Niveau.SENIOR)){
+						equipe.setNiveau(Niveau.EXPERT);
+						equipeRepository.save(equipe);
+						break;
+					}
 				}
 			}
 
