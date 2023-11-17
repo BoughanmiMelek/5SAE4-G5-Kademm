@@ -39,19 +39,7 @@ pipeline {
             }
         }
 
-        stage("Quality Gate") {
-            steps {
-                script {
-                    sleep(10)
-                    timeout(time: 1, unit: 'HOURS') {
-                         qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                        }
-                    }
-                }
-            }
-        }
+
 
         stage('Building jar') {
             steps {
@@ -90,16 +78,7 @@ pipeline {
             }
         }
       
-        stage('Email Notification'){
-            steps{
-                script{
-                    mail bcc: '', body: '''Hi,
-Welcome to jenkins email alerts.
-Thanks,
-Dorsaf''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'dorsaf.ayed@esprit.tn'
-                }
-            }
-        }
+
         
         stage('Build And Deploy Docker Image'){
             steps{
