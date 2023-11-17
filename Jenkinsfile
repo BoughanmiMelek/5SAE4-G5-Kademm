@@ -22,7 +22,7 @@ pipeline {
         }
 
 
-        stage('Maven Build') {
+        stage('Build Maven') {
             steps {
                 dir(env.PROJECT_DIR) {
                     sh 'mvn clean install'
@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-         stage('SonarQube Analysis') {
+         stage('SonarQube') {
                     steps {
                         dir(env.PROJECT_DIR) {
                             sh 'mvn clean package sonar:sonar -Dsonar.login=admin -Dsonar.password=password -Dmaven.test.skip=true'
@@ -46,7 +46,7 @@ pipeline {
                     }
                 }
 
-           stage('Nexus Deployment') {
+           stage('Nexus') {
             steps {
                 dir(env.PROJECT_DIR) {
                     script{
@@ -59,7 +59,7 @@ pipeline {
                             groupId: 'tn.esprit',
                             version: '1.0',
                             repository: 'maven-releases',
-                            credentialsId: 'nexus',
+                            credentialsId: 'nexus-credentials',
                             artifacts: [
                                     [artifactId: 'kaddem',
                                      classifier: '',
@@ -76,11 +76,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
+                dir(env.PROJECT_DIR) {
                 echo 'Building the Docker image...'
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
                         sh "echo $PWD | docker login -u $USER --password-stdin"
                         sh "docker build -t melekboug/kaddem:1.0 ."
                         }
+                }
             }
         }
 
@@ -96,7 +98,7 @@ pipeline {
         stage('Run Docker Compose') {
             steps {
                 echo 'Running Docker Compose...'
-                sh 'docker compose -f /var/lib/jenkins/workspace/pipelineDevo/5SAE4-G5-Kademm/docker-compose.yml up -d'
+                sh 'docker compose -f /var/lib/jenkins/workspace/pipelineDevo/5SAE4-G5-Kademm/docker-compose.yaml up -d'
             }
         }
 
