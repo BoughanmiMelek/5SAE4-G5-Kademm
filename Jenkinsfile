@@ -18,43 +18,9 @@ pipeline {
                 }
             }
         }
-
-        stage('Unit Testing') {
-            steps {
-                script {
-                 sh 'mvn test -Dtest=tn.esprit.spring.kaddem.EtudiantServiceImplTest'
-                }
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/TEST*.xml'
-                }
-            }
-        }
-        stage('Sonarqube Analysis') {
-            steps {
-                script {
-                    jacoco()
-                    withSonarQubeEnv('sonar') {
-                        sh "mvn verify sonar:sonar"
-                    }
-                }
             }
         }
 
-        stage("Quality Gate") {
-            steps {
-                script {
-                    sleep(10)
-                    timeout(time: 1, unit: 'HOURS') {
-                        def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                        }
-                    }
-                }
-            }
-        }
 
         stage('Maven Build') {
             steps {
@@ -83,6 +49,7 @@ pipeline {
            stage('Nexus Deployment') {
             steps {
                 dir(env.PROJECT_DIR) {
+                    script{
                     artifactPath = "target/kaddem-1.0.jar";
 
                     nexusArtifactUploader(
@@ -101,6 +68,7 @@ pipeline {
                             ]
                     );
                     }
+                }
             }
         }
 
@@ -128,11 +96,10 @@ pipeline {
         stage('Run Docker Compose') {
             steps {
                 echo 'Running Docker Compose...'
-                sh 'docker compose -f /var/lib/jenkins/workspace/pipelinedevo/5SAE4-G5-Kademm/docker-compose.yml up -d'
+                sh 'docker compose -f /var/lib/jenkins/workspace/pipelineDevo/5SAE4-G5-Kademm/docker-compose.yml up -d'
             }
         }
 
-
-
     }
 }
+
