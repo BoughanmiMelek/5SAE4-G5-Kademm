@@ -55,7 +55,7 @@ pipeline {
         stage("publish to nexus") {
             steps {
                 script {
-                    artifactPath = "target/kaddem-1.0.0.jar";
+                    artifactPath = "target/kaddem-0.0.1-SNAPSHOT.jar";
 
                     nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
