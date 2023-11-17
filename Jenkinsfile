@@ -7,7 +7,6 @@ pipeline {
         stage("GIT") {
             steps {
                 script {
-<<<<<<< HEAD
                     if (!fileExists(env.PROJECT_DIR)) {
                         sh "git clone -b MelekBoughanmi-5SAE4-G5 https://BoughanmiMelek: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@github.com/BoughanmiMelek/5SAE4-G5-Kademm.git ${env.PROJECT_DIR}"
                     } else {
@@ -15,7 +14,6 @@ pipeline {
                         dir(env.PROJECT_DIR) {
                             sh "git checkout MelekBoughanmi-5SAE4-G5"
                             sh "git pull origin MelekBoughanmi-5SAE4-G5"
-=======
                     sh 'mvn clean compile'
                 }
             }
@@ -52,7 +50,6 @@ pipeline {
                         def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
                         if (qg.status != 'OK') {
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
->>>>>>> ff221020207e40c0475a90ba9274e48f95eb069b
                         }
                     }
                 }
