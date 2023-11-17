@@ -82,7 +82,7 @@
                 <configuration>
                     <forkCount>5</forkCount>
                     <reuseForks>true</reuseForks>
-                    <argLine>-Dnet.sf.ehcache.disabled=true</argLine>
+                    <!-- <argLine>-Dnet.sf.ehcache.disabled=true</argLine> -->
                 </configuration>
             </plugin>
 
