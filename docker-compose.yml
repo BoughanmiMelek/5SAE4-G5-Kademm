@@ -1,0 +1,46 @@
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    environment:
+      MYSQL_USER: 'user'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'kaddemdb'
+      MYSQL_PASSWORD: 'password'
+    restart: unless-stopped
+    volumes:
+      - my-db:/var/lib/mysql
+    ports:
+      - '3307:3306'
+    expose:
+      - '3306'
+    networks:
+      - backend-net
+
+
+  spring-app:
+    image: dorsafayed/spring-app:1.0
+    depends_on:
+      - mysqldb
+    restart: on-failure
+    ports:
+      - 8089:8089
+    environment:
+      SPRING_APPLICATION_JSON: '{
+             "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/kaddemdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+             "spring.datasource.username" : "root",
+             "spring.datasource.password" : "root",
+             "spring.jpa.show-sql" : "true",
+             "spring.jpa.hibernate.ddl-auto" : "update",
+             "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQLDialect"
+           }'
+    networks:
+      - backend-net
+
+networks:
+  backend-net :
+    driver: bridge
+
+volumes:
+  my-db:
+    driver: local
