@@ -32,12 +32,6 @@ public class EtudiantServiceImplTest {
     private EtudiantRepository etudiantRepository;
 
     @Mock
-    private ContratRepository contratRepository;
-
-    @Mock
-    private EquipeRepository equipeRepository;
-
-    @Mock
     private DepartementRepository departementRepository;
 
     @BeforeEach
@@ -48,11 +42,11 @@ public class EtudiantServiceImplTest {
     @Test
     public void testRetrieveAllEtudiants() {
         List<Etudiant> etudiants = new ArrayList<>();
-        // Add some sample etudiants to the list
+
         etudiants.add(new Etudiant("Will", "Smith"));
         etudiants.add(new Etudiant("Ben", "Bane"));
 
-        // Mock the behavior of the repository
+
         when(etudiantRepository.findAll()).thenReturn(etudiants);
 
         List<Etudiant> retrievedEtudiants = etudiantService.retrieveAllEtudiants();
@@ -75,7 +69,6 @@ public class EtudiantServiceImplTest {
         assertEquals(newEtudiant.getNomE(), addedEtudiant.getNomE());
     }
 
-    // Add test cases for other methods like updateEtudiant, retrieveEtudiant, removeEtudiant, assignEtudiantToDepartement, and addAndAssignEtudiantToEquipeAndContract.
 
     @Test
     public void testGetEtudiantsByDepartement() {
@@ -83,13 +76,12 @@ public class EtudiantServiceImplTest {
         Departement departement = new Departement(departementId, "Dept 5");
         List<Etudiant> etudiantsInDepartement = new ArrayList<>();
 
-        // Add some etudiants to the list
+
         etudiantsInDepartement.add(new Etudiant("John", "Doe"));
         etudiantsInDepartement.add(new Etudiant("Clide", "Wilson"));
 
         departement.setEtudiants(new HashSet<>(etudiantsInDepartement));
 
-        // Mock the behavior of the repository
         when(departementRepository.findById(departementId)).thenReturn(Optional.of(departement));
         when(etudiantRepository.findEtudiantsByDepartement_IdDepart(departementId)).thenReturn(etudiantsInDepartement);
 
